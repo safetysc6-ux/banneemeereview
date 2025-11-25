@@ -7,21 +7,20 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- ตั้งค่าธีมสี (Color Palette) --- */
+        /* --- ตั้งค่าธีมสี --- */
         :root {
             --primary-color: #A36645; /* สีส้มอิฐ (สีหลัก) */
-            --primary-dark: #8a5336; /* สีส้มที่เข้มขึ้นตอนเอาเมาส์ชี้ */
-            --secondary-color: #7F9A83; /* สีเขียวใบไม้ (สำหรับหมวดหมู่) */
-            --bg-body: #F8F9FA; /* สีพื้นหลังเว็บ (ขาวอมเทานิดๆ) */
-            --bg-card: #ffffff; /* สีพื้นหลังการ์ด (ขาวจั๊วะ) */
-            --text-dark: #2D3436; /* สีตัวอักษรหลัก (เทาเข้มเกือบดำ) */
-            --text-muted: #636E72; /* สีตัวอักษรย่อย (เทากลาง) */
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); /* เงาเล็ก */
-            --shadow-md: 0 8px 24px rgba(0,0,0,0.12); /* เงาใหญ่ตอน Hover */
+            --secondary-color: #7F9A83; /* สีเขียวใบไม้ */
+            --bg-body: #F8F9FA;
+            --bg-card: #ffffff;
+            --text-dark: #2D3436;
+            --text-muted: #636E72;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.15);
         }
 
         /* --- Reset & Base Styles --- */
@@ -31,186 +30,118 @@
             background-color: var(--bg-body);
             color: var(--text-dark);
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* ทำให้ Footer อยู่ด้านล่างสุดเสมอ */
+            display: flex; flex-direction: column; min-height: 100vh;
         }
-
         .container {
-            max-width: 1000px; /* ขยายให้กว้างขึ้นอีกนิดเพื่อให้ดูโปร่ง */
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
-            flex: 1; /* ดัน Footer ลงไป */
+            flex: 1;
         }
 
-        /* --- Header Section (ปรับปรุงใหม่) --- */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #eee; /* เส้นแบ่งบางๆ */
-        }
-        .logo-wrapper {
-            margin-bottom: 20px;
-        }
-        .logo-img {
-            width: 140px; /* ขยายโลโก้ให้เด่นขึ้น */
-            height: auto;
-            /* เพิ่มเงาและกรอบมนให้โลโก้ดูมีมิติ */
-            border-radius: 20px;
-            box-shadow: var(--shadow-sm);
-            padding: 5px;
-            background: white;
-        }
-        h1 {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            letter-spacing: -0.5px;
-            margin-bottom: 10px;
-        }
-        .tagline {
-            font-weight: 400;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
+        /* --- Header --- */
+        header { text-align: center; margin-bottom: 50px; padding-bottom: 30px; border-bottom: 2px solid #eee; }
+        .logo-wrapper { margin-bottom: 20px; }
+        .logo-img { width: 140px; height: auto; border-radius: 20px; box-shadow: var(--shadow-sm); padding: 5px; background: white; }
+        h1 { font-weight: 700; color: var(--primary-color); font-size: 2.2rem; margin-bottom: 10px; }
+        .tagline { font-weight: 400; color: var(--text-muted); font-size: 1.1rem; }
 
         /* --- Product Grid --- */
         #product-list {
             display: grid;
-            /* ปรับให้การ์ดมีความกว้างที่เหมาะสมและยืดหยุ่น */
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
 
-        /* --- Product Card Styling (หัวใจสำคัญ) --- */
+        /* --- Product Card Styling --- */
         .product-card {
             background: var(--bg-card);
-            border-radius: 16px; /* มุมมนมากขึ้น */
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease; /* เอฟเฟกต์ที่นุ่มนวล */
+            transition: all 0.3s ease;
             text-decoration: none;
             color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            border: 1px solid rgba(0,0,0,0.05); /* ขอบบางๆ */
+            display: flex; flex-direction: column; height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative; /* จำเป็นสำหรับ Price Badge */
         }
-
         .product-card:hover {
-            transform: translateY(-7px); /* ลอยขึ้นสูงกว่าเดิม */
-            box-shadow: var(--shadow-md); /* เงาชัดขึ้น */
-            border-color: rgba(163, 102, 69, 0.2); /* เปลี่ยนสีขอบจางๆ ตอนชี้ */
+            transform: translateY(-7px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(163, 102, 69, 0.3);
         }
 
         .img-wrapper {
             overflow: hidden;
             height: 200px;
-            position: relative;
+            position: relative; /* จำเป็นสำหรับ Price Badge */
         }
-
         .product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease; /* รูปขยายช้าๆ ตอนชี้ */
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        .product-card:hover .product-img {
-            transform: scale(1.08); /* ซูมรูปเข้าเล็กน้อย */
+        .product-card:hover .product-img { transform: scale(1.08); }
+
+        /* === ส่วนที่เพิ่มใหม่: ป้ายราคาลอยเด่น === */
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color); /* ใช้สีหลักให้เด่น */
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 6px 14px;
+            border-radius: 30px; /* ทรงแคปซูลมนๆ */
+            box-shadow: 0 4px 10px rgba(163, 102, 69, 0.4); /* เงาสีส้มให้ดูลอย */
+            z-index: 2; /* ให้อยู่บนสุด */
+            display: flex;
+            align-items: center;
         }
+        .price-badge .currency {
+            font-size: 0.8rem;
+            margin-left: 4px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        /* ===================================== */
 
         .product-info {
             padding: 24px;
             flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-
         .category-badge {
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--secondary-color);
-            background-color: #f0f7f4; /* พื้นหลังสีเขียวอ่อนๆ */
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            align-self: flex-start;
+            display: inline-block; font-size: 0.8rem; font-weight: 500;
+            color: var(--secondary-color); background-color: #f0f7f4;
+            padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; align-self: flex-start;
         }
-
         .product-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;
             color: var(--text-dark);
         }
-
-        /* ปุ่มดูรีวิว (ปรับให้เป็นปุ่มจริงจัง) */
         .btn-view {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 10px 20px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50px; /* ปุ่มแคปซูล */
-            transition: all 0.2s;
-            align-self: flex-start;
-            width: 100%; /* ปุ่มเต็มความกว้างบนมือถือ */
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--primary-color); font-weight: 600; font-size: 0.95rem;
+            padding: 10px 20px; border: 2px solid var(--primary-color);
+            border-radius: 50px; transition: all 0.2s; align-self: flex-start; width: 100%;
         }
-        .btn-view i {
-            margin-left: 8px; /* ระยะห่างไอคอนลูกศร */
-            transition: margin-left 0.2s;
-        }
-
-        .product-card:hover .btn-view {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .product-card:hover .btn-view i {
-            margin-left: 14px; /* ลูกศรขยับหนีตอนชี้ */
-        }
+        .btn-view i { margin-left: 8px; transition: margin-left 0.2s; }
+        .product-card:hover .btn-view { background-color: var(--primary-color); color: white; }
+        .product-card:hover .btn-view i { margin-left: 14px; }
 
         /* --- Loading State --- */
-        .loading-state {
-            grid-column: 1 / -1; /* กินพื้นที่เต็มความกว้าง */
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
-        .loading-icon {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
+        .loading-state { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.2rem; }
+        .loading-icon { color: var(--primary-color); font-size: 2rem; margin-bottom: 15px; }
 
         /* --- Footer --- */
-        footer {
-            background-color: white;
-            padding: 30px 0;
-            text-align: center;
-            border-top: 1px solid #eee;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
+        footer { background-color: white; padding: 30px 0; text-align: center; border-top: 1px solid #eee; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
 
-        /* Responsive สำหรับมือถือ */
         @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .container { padding: 30px 15px; }
-            #product-list { gap: 20px; }
-            .product-info { padding: 18px; }
+            h1 { font-size: 1.8rem; } .container { padding: 30px 15px; } #product-list { gap: 20px; } .product-info { padding: 18px; }
+            .price-badge { top: 10px; right: 10px; font-size: 1rem; padding: 4px 10px; } /* ปรับขนาดป้ายราคาบนมือถือ */
         }
 
     </style>
@@ -221,7 +152,7 @@
         <header>
             <div class="logo-wrapper">
                 <img src="logo.png" alt="โลโก้ บ้านนี้มีรีวิว" class="logo-img" onerror="this.style.display='none'">
-                </div>
+            </div>
             <h1>บ้านนี้มีรีวิว</h1>
             <p class="tagline">คัดของดี การันตีเพื่อบ้านคุณ | อัปเดตประจำสัปดาห์</p>
         </header>
@@ -250,22 +181,48 @@
 
         const productListContainer = document.getElementById('product-list');
 
+        // ฟังก์ชันจัดรูปแบบราคา (เพิ่มลูกน้ำ และเช็คว่ามีราคาไหม)
+        function formatPrice(price) {
+            // ลบลูกน้ำและช่องว่างออกก่อน (เผื่อมีคนกรอกมา)
+            let cleanPrice = price ? price.toString().replace(/,/g, '').trim() : '';
+            // แปลงเป็นตัวเลข
+            let numericPrice = parseFloat(cleanPrice);
+
+            // ถ้าไม่ใช่ตัวเลข หรือไม่มีค่า ให้คืนค่าว่าง
+            if (isNaN(numericPrice) || cleanPrice === '') {
+                return null;
+            }
+
+            // คืนค่าเป็นรูปแบบมีลูกน้ำ (เช่น 1,590)
+            return numericPrice.toLocaleString('th-TH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+
         function fetchAndDisplayProducts() {
             Papa.parse(googleSheetCSVUrl, {
                 download: true,
                 header: true,
-                skipEmptyLines: true, // ข้ามแถวว่างป้องกัน Error
+                skipEmptyLines: true,
                 complete: function(results) {
                     const products = results.data;
                     let htmlContent = '';
 
-                    // ใช้ .reverse() เพื่อโชว์ของใหม่สุดก่อน
                     products.reverse().forEach(product => {
                         if(product.Name && product.Link) {
+                            
+                            // เตรียมป้ายราคา
+                            const formattedPrice = formatPrice(product.Price);
+                            let priceBadgeHtml = '';
+                            // ถ้ามีราคาที่ถูกต้อง ให้สร้าง HTML ป้ายราคา
+                            if (formattedPrice) {
+                                priceBadgeHtml = `<div class="price-badge">${formattedPrice} <span class="currency">฿</span></div>`;
+                            }
+
                             htmlContent += `
                                 <a href="${product.Link}" target="_blank" class="product-card">
                                     <div class="img-wrapper">
                                         <img src="${product.Image || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${product.Name}" class="product-img">
+                                        ${priceBadgeHtml}
                                     </div>
                                     <div class="product-info">
                                         <div>
@@ -283,7 +240,6 @@
                         }
                     });
 
-                    // ถ้าไม่มีข้อมูลเลย ให้แจ้งเตือน
                     if (htmlContent === '') {
                          productListContainer.innerHTML = '<div class="loading-state"><i class="fas fa-box-open loading-icon"></i><br>ยังไม่มีรายการสินค้า</div>';
                     } else {
