@@ -15,118 +15,99 @@
         :root {
             --bg-main: #121212; --bg-secondary: #1e1e1e;
             --text-primary: #ffffff; --text-secondary: #b0b0b0;
-            --brand-orange: #ff5722;
-            --facebook-blue: #1877F2; /* สีใหม่สำหรับปุ่ม FB */
+            --brand-orange: #ff5722; --facebook-blue: #1877F2;
+            --online-green: #2ecc71; /* สีเขียวสำหรับสถานะออนไลน์ */
             --header-height: 60px; --cat-nav-height: 50px;
         }
 
-        /* --- Base Reset --- */
+        /* --- Base Reset & Layout --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Kanit', sans-serif; background-color: var(--bg-main); color: var(--text-primary);
             padding-top: calc(var(--header-height) + var(--cat-nav-height)); overflow-x: hidden;
         }
-        a { text-decoration: none; color: inherit; }
-        input, button { font-family: 'Kanit', sans-serif; }
-
-        /* --- Header & Nav Styles (เหมือนเดิม) --- */
+        a { text-decoration: none; color: inherit; } input, button { font-family: 'Kanit', sans-serif; }
         .fixed-top-container { position: fixed; top: 0; left: 0; right: 0; z-index: 900; background: var(--bg-main); }
-        .hybrid-header { height: var(--header-height); display: flex; align-items: center; padding: 0 15px; gap: 15px; border-bottom: 1px solid #2a2a2a; }
+        .main-container { padding: 10px; min-height: 80vh; }
+        #product-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        /* --- Header Styles (ปรับปรุงใหม่ เพิ่มตัวนับคน) --- */
+        .hybrid-header {
+            height: var(--header-height); display: flex; align-items: center; justify-content: space-between; /* จัดชิดขอบซ้ายขวา */
+            padding: 0 15px; border-bottom: 1px solid #2a2a2a;
+        }
         .brand-logo { font-size: 1.2rem; font-weight: 700; color: var(--brand-orange); white-space: nowrap; }
-        .search-container { flex: 1; position: relative; }
-        .search-input { width: 100%; background: var(--bg-secondary); border: none; border-radius: 30px; padding: 10px 15px 10px 40px; color: var(--text-primary); font-size: 0.95rem; outline: none; }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+        
+        /* === ส่วนที่เพิ่มใหม่: ป้ายแสดงจำนวนคนออนไลน์ === */
+        .online-counter-badge {
+            display: flex; align-items: center;
+            background: rgba(255,255,255,0.07); padding: 4px 10px; border-radius: 20px;
+            font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;
+        }
+        .online-indicator {
+            width: 8px; height: 8px; background-color: var(--online-green);
+            border-radius: 50%; margin-right: 6px; position: relative;
+        }
+        /* เพิ่มเอฟเฟกต์แสงวิบวับให้จุดสีเขียว */
+        .online-indicator::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; background-color: var(--online-green);
+            animation: pulse-green 2s infinite; opacity: 0.6;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(1); opacity: 0.6; }
+            70% { transform: scale(2.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        /* ========================================== */
+
+        /* --- Search & Category Nav --- */
+        /* ซ่อนช่องค้นหาใน Header เดิมออกไปก่อน เพื่อความสะอาดตา (หรือจะคงไว้ก็ได้) */
+        /* .search-container { flex: 1; position: relative; margin-left: 15px;} */
+        /* .search-input { width: 100%; background: var(--bg-secondary); border: none; border-radius: 30px; padding: 10px 15px 10px 40px; color: var(--text-primary); font-size: 0.95rem; outline: none; } */
+        /* .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); } */
+
         .category-nav-wrap { height: var(--cat-nav-height); display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid #2a2a2a; background: var(--bg-main); }
         .category-scroll { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
         .category-scroll::-webkit-scrollbar { display: none; }
         .cat-pill { background: rgba(255,255,255,0.1); color: var(--text-secondary); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
         .cat-pill.active { background: rgba(255, 87, 34, 0.15); color: var(--brand-orange); border-color: var(--brand-orange); font-weight: 500; }
-        .main-container { padding: 10px; min-height: 80vh; }
-        #product-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        
+        /* --- Search Bar (ย้ายมาไว้ใต้ Header เพื่อความสวยงาม) --- */
+        .mobile-search-bar {
+            padding: 10px 15px; background: var(--bg-main); border-bottom: 1px solid #2a2a2a;
+        }
+        .mobile-search-input-wrap { position: relative; }
+        .mobile-search-input { width: 100%; background: var(--bg-secondary); border: none; border-radius: 8px; padding: 12px 15px 12px 40px; color: var(--text-primary); font-size: 1rem; outline: none; }
+        .mobile-search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
 
-        /* --- Card Styles (ปรับปรุงใหม่ เพิ่มปุ่มรายละเอียด) --- */
-        .immersive-card {
-            position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 5;
-            background: var(--bg-secondary); box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: block; /* เปลี่ยนเป็น block เพื่อให้คลิกได้ทั้งการ์ด */
-        }
+        /* --- Card, Modal, Floating Btn Styles (เหมือนเดิม) --- */
+        .immersive-card { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-secondary); box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: block; }
         .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .card-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
-            padding: 60px 10px 10px 10px; display: flex; flex-direction: column; justify-content: flex-end;
-        }
+        .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%); padding: 60px 10px 10px 10px; display: flex; flex-direction: column; justify-content: flex-end; }
         .card-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         .card-footer { display: flex; align-items: center; justify-content: space-between; }
         .card-price { color: var(--brand-orange); font-weight: 700; font-size: 1.2rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         .card-price span { font-size: 0.8rem; }
-        
-        /* กลุ่มปุ่มแอ็คชั่นในการ์ด */
         .card-actions { display: flex; gap: 8px; }
-        .btn-action {
-            background: rgba(255,255,255,0.2); color: white;
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; backdrop-filter: blur(5px);
-            border: none; cursor: pointer; transition: background 0.2s;
-        }
-        .btn-action.shop { background: var(--brand-orange); } /* ปุ่มร้านค้าสีส้ม */
+        .btn-action { background: rgba(255,255,255,0.2); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; backdrop-filter: blur(5px); border: none; cursor: pointer; transition: background 0.2s; }
+        .btn-action.shop { background: var(--brand-orange); }
         .btn-action:hover { transform: scale(1.05); }
-
-        /* --- MODAL STYLES (หน้าต่างเด้งแสดงรายละเอียด) --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8); z-index: 1000;
-            display: none; /* ซ่อนไว้ก่อน */
-            align-items: center; justify-content: center; padding: 20px;
-            backdrop-filter: blur(5px);
-        }
-        .modal-overlay.active { display: flex; } /* แสดงเมื่อมี class active */
-        
-        .modal-container {
-            background: var(--bg-secondary); width: 100%; max-width: 500px;
-            border-radius: 12px; overflow: hidden; position: relative;
-            max-height: 90vh; display: flex; flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .modal-close-btn {
-            position: absolute; top: 15px; right: 15px;
-            background: rgba(0,0,0,0.5); color: white; border: none;
-            width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem;
-            cursor: pointer; z-index: 2;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-overlay.active { display: flex; }
+        .modal-container { background: var(--bg-secondary); width: 100%; max-width: 500px; border-radius: 12px; overflow: hidden; position: relative; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 2; }
         .modal-img { width: 100%; height: 250px; object-fit: cover; }
         .modal-content { padding: 20px; overflow-y: auto; }
         .modal-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
         .modal-price { color: var(--brand-orange); font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
-        
-        .modal-description-box {
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;
-            margin-bottom: 20px;
-        }
+        .modal-description-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
         .modal-desc-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); text-transform: uppercase;}
-        .modal-desc-text { font-size: 0.95rem; color: #ddd; line-height: 1.7; white-space: pre-line; /* ให้แสดงการขึ้นบรรทัดใหม่ตามใน Sheet */ }
-
+        .modal-desc-text { font-size: 0.95rem; color: #ddd; line-height: 1.7; white-space: pre-line; }
         .modal-footer { padding: 20px; border-top: 1px solid #2a2a2a; }
-        .btn-modal-shop {
-            width: 100%; background: var(--brand-orange); color: white;
-            border: none; padding: 12px; border-radius: 30px;
-            font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        /* --- FLOATING FACEBOOK BUTTON --- */
-        .floating-fb-btn {
-            position: fixed; bottom: 25px; right: 25px;
-            background: var(--facebook-blue); color: white;
-            width: 55px; height: 55px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
-            z-index: 950; /* อยู่เหนือ Content แต่อยู่ใต้ Modal */
-            transition: transform 0.2s;
-        }
+        .btn-modal-shop { width: 100%; background: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .floating-fb-btn { position: fixed; bottom: 25px; right: 25px; background: var(--facebook-blue); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4); z-index: 950; transition: transform 0.2s; }
         .floating-fb-btn:hover { transform: scale(1.1); }
-
-        /* Loading & States */
         .status-msg { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--text-secondary); }
         .status-icon { font-size: 2rem; margin-bottom: 15px; color: var(--brand-orange); opacity: 0.5;}
     </style>
@@ -136,11 +117,20 @@
     <div class="fixed-top-container">
         <header class="hybrid-header">
             <div class="brand-logo">banneemeereview</div>
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="ค้นหารีวิว...">
+            
+            <div class="online-counter-badge">
+                <span class="online-indicator"></span>
+                <span id="onlineCountText">Loading...</span>
             </div>
-        </header>
+            </header>
+        
+        <div class="mobile-search-bar">
+            <div class="mobile-search-input-wrap">
+                <i class="fas fa-search mobile-search-icon"></i>
+                <input type="text" id="searchInput" class="mobile-search-input" placeholder="ค้นหารีวิวของใช้...">
+            </div>
+        </div>
+
         <div class="category-nav-wrap">
             <nav class="category-scroll" id="category-filter">
                 <button class="cat-pill active" onclick="filterByCategory('all')">🔥 ทั้งหมด</button>
@@ -148,7 +138,7 @@
         </div>
     </div>
 
-    <main class="main-container">
+    <main class="main-container" style="padding-top: 70px;">
         <div id="product-list">
             <div class="status-msg"><i class="fas fa-circle-notch fa-spin status-icon"></i><br>กำลังโหลดรีวิวเด็ดๆ...</div>
         </div>
@@ -157,6 +147,7 @@
     <a href="ใส่ลิ้งค์เพจเฟสบุ๊คของคุณที่นี่" target="_blank" class="floating-fb-btn">
         <i class="fab fa-facebook-f"></i>
     </a>
+
     <div class="modal-overlay" id="productModal">
         <div class="modal-container">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
@@ -164,34 +155,55 @@
             <div class="modal-content">
                 <h3 class="modal-title" id="modalTitle"></h3>
                 <div class="modal-price" id="modalPrice"></div>
-                
                 <div class="modal-description-box">
                     <div class="modal-desc-title">รายละเอียดสินค้า</div>
                     <p class="modal-desc-text" id="modalDesc"></p>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" target="_blank" class="btn-modal-shop" id="modalShopLink">
-                    <i class="fas fa-shopping-cart"></i> ไปที่ร้านค้า
-                </a>
+                <a href="#" target="_blank" class="btn-modal-shop" id="modalShopLink"><i class="fas fa-shopping-cart"></i> ไปที่ร้านค้า</a>
             </div>
         </div>
     </div>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
         const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSg4AWiUuB_-G_uRfbnwHQKZpOzBetOVqtA9mRyfj3uGLeObxFZpvj0hmEZdQLm_s5LZl1ck2_zWw5/pub?gid=0&single=true&output=csv';
 
-        let allProducts = [];
-        let currentCategory = 'all';
+        let allProducts = []; let currentCategory = 'all';
         const modal = document.getElementById('productModal');
+
+        // === ส่วนที่เพิ่มใหม่: ฟังก์ชันจำลองตัวเลขคนออนไลน์ ===
+        function simulateOnlineUsers() {
+            const countElement = document.getElementById('onlineCountText');
+            // สุ่มตัวเลขเริ่มต้นระหว่าง 15 ถึง 35 คน
+            let currentCount = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
+            
+            countElement.innerText = `${currentCount} ออนไลน์`;
+
+            // อัปเดตตัวเลขทุกๆ 3-7 วินาที
+            setInterval(() => {
+                // สุ่มว่าจะเพิ่มหรือลด (-2 ถึง +3 คน)
+                const change = Math.floor(Math.random() * 6) - 2;
+                currentCount += change;
+                // จำกัดไม่ให้ต่ำกว่า 10 หรือเกิน 50 เพื่อความสมจริง
+                if (currentCount < 10) currentCount = 10 + Math.floor(Math.random() * 5);
+                if (currentCount > 50) currentCount = 50 - Math.floor(Math.random() * 5);
+                
+                countElement.innerText = `${currentCount} ออนไลน์`;
+            }, Math.random() * (7000 - 3000) + 3000);
+        }
+        // เริ่มทำงานทันที
+        simulateOnlineUsers();
+        // ==================================================
+
 
         Papa.parse(googleSheetCSVUrl, {
             download: true, header: true, skipEmptyLines: true,
             complete: function(results) {
                 allProducts = results.data.reverse();
-                generateCategoryPills();
-                renderProducts(allProducts);
-                setupSearchListener();
+                generateCategoryPills(); renderProducts(allProducts); setupSearchListener();
             }
         });
 
@@ -202,10 +214,7 @@
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'cat-pill'; btn.innerText = cat;
-                btn.onclick = () => {
-                    document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active'); filterByCategory(cat);
-                };
+                btn.onclick = () => { document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active')); btn.classList.add('active'); filterByCategory(cat); };
                 navContainer.appendChild(btn);
             });
         }
@@ -228,24 +237,16 @@
                  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
                  document.querySelector('.cat-pill:first-child').classList.add('active');
                  renderProducts(allProducts);
-            } else {
-                renderProducts(allProducts.filter(p => p.Category && p.Category.trim() === cat));
-            }
+            } else { renderProducts(allProducts.filter(p => p.Category && p.Category.trim() === cat)); }
         }
 
-        // --- ฟังก์ชันแสดงผลการ์ด (อัปเดตใหม่) ---
         function renderProducts(productsToRender) {
             const listContainer = document.getElementById('product-list');
-            listContainer.innerHTML = '';
-            let htmlContent = '';
-
+            listContainer.innerHTML = ''; let htmlContent = '';
             productsToRender.forEach((product, index) => {
                 if (product.Name && product.Link) {
                     let priceHtml = product.Price ? `<span>฿</span>${Number(product.Price.replace(/,/g, '')).toLocaleString()}` : `<span style="font-size:0.9rem; font-weight:400;">ดูราคา</span>`;
                     let imgUrl = product.Image || 'https://via.placeholder.com/300x400?text=No+Image';
-
-                    // เราเปลี่ยนจาก <a> เป็น <div> เพื่อให้ใส่ปุ่มแยกกันได้
-                    // ปุ่ม 'รายละเอียด' (ไอคอนตา) จะเรียกฟังก์ชัน openModal โดยส่ง index ของสินค้าไป
                     htmlContent += `
                         <div class="immersive-card">
                             <img src="${imgUrl}" alt="${product.Name}" class="card-img">
@@ -263,46 +264,22 @@
                     `;
                 }
             });
-
-            if (htmlContent === '') {
-                listContainer.innerHTML = `<div class="status-msg"><i class="far fa-sad-tear status-icon"></i><br>ไม่พบสินค้าที่ค้นหา</div>`;
-                listContainer.style.gridTemplateColumns = '1fr'; 
-            } else {
-                listContainer.innerHTML = htmlContent;
-                listContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
-            }
+            if (htmlContent === '') { listContainer.innerHTML = `<div class="status-msg"><i class="far fa-sad-tear status-icon"></i><br>ไม่พบสินค้าที่ค้นหา</div>`; listContainer.style.gridTemplateColumns = '1fr'; 
+            } else { listContainer.innerHTML = htmlContent; listContainer.style.gridTemplateColumns = 'repeat(2, 1fr)'; }
         }
 
-        // --- MODAL FUNCTIONS (ฟังก์ชันสำหรับหน้าต่างรายละเอียด) ---
-        
-        // เปิด Modal และใส่ข้อมูล
         function openModal(index) {
-            const product = allProducts[index]; // ดึงข้อมูลสินค้าจาก index ที่ส่งมา
+            const product = allProducts[index];
             if(!product) return;
-
-            // ใส่ข้อมูลลงใน element ต่างๆ ของ Modal
             document.getElementById('modalImg').src = product.Image || 'https://via.placeholder.com/300x400?text=No+Image';
             document.getElementById('modalTitle').innerText = product.Name;
             document.getElementById('modalPrice').innerText = product.Price ? `฿${Number(product.Price.replace(/,/g, '')).toLocaleString()}` : 'ดูราคาที่ร้านค้า';
-            // ใส่ Description (ถ้าไม่มีให้ใส่ข้อความเริ่มต้น)
             document.getElementById('modalDesc').innerText = product.Description || 'ไม่มีรายละเอียดเพิ่มเติม';
             document.getElementById('modalShopLink').href = product.Link;
-
-            // แสดง Modal
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // ป้องกันการเลื่อนหน้าหลัง
+            modal.classList.add('active'); document.body.style.overflow = 'hidden';
         }
-
-        // ปิด Modal
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // คืนค่าการเลื่อน
-        }
-
-        // ปิด Modal เมื่อคลิกที่พื้นหลังทึบ
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
+        function closeModal() { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     </script>
 </body>
 </html>
