@@ -3,352 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>banneemeereview - แหล่งรวมรีวิวของใช้ในบ้านที่คุณเชื่อถือได้</title>
+    <title>banneemeereview - ช้อปปิ้งรีวิวแนวใหม่</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- Shopee Color Palette & Variables --- */
+        /* --- Hybrid Theme Variables (Dark Mode Base with Shopee Accents) --- */
         :root {
-            --shopee-orange: #ee4d2d; /* สีส้มหลัก */
-            --shopee-orange-dark: #d73211;
-            --shopee-bg-gray: #f5f5f5; /* สีพื้นหลังเทาอ่อน */
-            --text-primary: #222222;
-            --text-secondary: #888888;
-            --border-color: rgba(0,0,0,.09);
-            --card-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
-            --card-hover-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-            --header-height: 70px;
+            /* TikTok Vibe: พื้นหลังมืด */
+            --bg-main: #121212; 
+            --bg-secondary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            
+            /* Shopee Vibe: สีส้มสดใส */
+            --brand-orange: #ff5722; /* ปรับให้สดขึ้นนิดนึงบนพื้นมืด */
+            
+            /* Dimensions */
+            --header-height: 60px;
+            --cat-nav-height: 50px;
         }
 
-        /* --- Reset & Base Styles --- */
+        /* --- Reset & Base --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: var(--shopee-bg-gray);
+            background-color: var(--bg-main);
             color: var(--text-primary);
-            padding-top: var(--header-height); /* เว้นที่ให้ Header */
+            /* เว้นที่ด้านบนให้ Header และ Category Nav ลอยอยู่ */
+            padding-top: calc(var(--header-height) + var(--cat-nav-height)); 
+            overflow-x: hidden; /* ป้องกันการเลื่อนซ้ายขวา */
         }
         a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
+        input, button { font-family: 'Kanit', sans-serif; }
 
-        /* --- Main Container --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* --- Header (Shopee Style) --- */
-        .shopee-header {
-            background: linear-gradient(-180deg,#f53d2d,#f63);
-            height: var(--header-height);
+        /* --- Fixed Top Section (Header + Categories) --- */
+        .fixed-top-container {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 999;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--bg-main); /* พื้นหลังทึบ */
         }
-        .header-container {
+
+        /* --- Header (Search Bar Focus) --- */
+        .hybrid-header {
+            height: var(--header-height);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            height: 100%;
+            padding: 0 15px;
+            gap: 15px;
+            border-bottom: 1px solid #2a2a2a;
         }
-        .header-logo {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: white;
-            display: flex;
-            align-items: center;
+        .brand-logo {
+            font-size: 1.2rem; font-weight: 700; color: var(--brand-orange);
+            white-space: nowrap;
         }
-        .header-logo i { margin-right: 10px; font-size: 1.5rem;}
-        
-        /* Search Bar Simulation */
-        .header-search-wrap {
+        .search-container {
             flex: 1;
-            margin: 0 40px;
-            max-width: 700px;
+            position: relative;
         }
-        .header-search-box {
-            background: white;
-            border-radius: 2px;
-            display: flex;
-            padding: 4px;
-            align-items: center;
-        }
-        .header-search-input {
-            flex: 1;
+        .search-input {
+            width: 100%;
+            background: var(--bg-secondary);
             border: none;
-            outline: none;
-            padding: 8px 15px;
-            font-family: 'Kanit';
+            border-radius: 30px; /* ทรงกลมแบบ TikTok */
+            padding: 10px 15px 10px 40px; /* เว้นที่ให้ไอคอนแว่นขยาย */
+            color: var(--text-primary);
             font-size: 0.95rem;
+            outline: none;
         }
-        .header-search-btn {
-            background: var(--shopee-orange);
-            border: none;
-            color: white;
-            width: 60px;
-            height: 34px;
-            border-radius: 2px;
-            cursor: pointer;
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
         }
-        .header-icons { color: white; font-size: 1.2rem; display: flex; gap: 20px;}
 
-        /* --- Banner Section --- */
-        .banner-section {
-            background: white;
-            margin-top: 20px;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-        /* ใช้ Placeholder สีส้มไล่โทนแทนรูปภาพจริง */
-        .banner-placeholder {
-            height: 250px;
-            background: linear-gradient(45deg, var(--shopee-orange), #ff7e5f);
+        /* --- Category Nav (TikTok Style Pills) --- */
+        .category-nav-wrap {
+            height: var(--cat-nav-height);
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            padding: 0 15px;
+            border-bottom: 1px solid #2a2a2a;
+            background: var(--bg-main); /* พื้นหลังทึบ */
         }
-
-        /* --- Category Navigation (Pills) --- */
-        .category-section {
-            background: white;
-            margin-top: 20px;
-            padding: 15px 20px;
-            border-radius: 4px;
-            box-shadow: var(--card-shadow);
-        }
-        .category-header { font-size: 1.1rem; font-weight: 500; margin-bottom: 15px; color: var(--text-secondary); }
-        .category-nav-scroll {
+        .category-scroll {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding-bottom: 5px;
-            /* ซ่อน Scrollbar แต่ยังเลื่อนได้ */
-            scrollbar-width: none; -ms-overflow-style: none;
+            scrollbar-width: none; /* ซ่อน Scrollbar Firefox */
         }
-        .category-nav-scroll::-webkit-scrollbar { display: none; }
-
+        .category-scroll::-webkit-scrollbar { display: none; /* ซ่อน Scrollbar Chrome/Safari */ }
+        
         .cat-pill {
-            border: 1px solid rgba(0,0,0,.09);
-            background: white;
-            color: var(--text-primary);
-            padding: 8px 20px;
-            border-radius: 20px; /* ทรงแคปซูล */
+            background: rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-size: 0.9rem;
-            cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
+            border: 1px solid transparent;
         }
-        .cat-pill:hover { background: #f8f8f8; border-color: rgba(0,0,0,.2); }
         .cat-pill.active {
-            background: rgba(238, 77, 45, 0.08);
-            color: var(--shopee-orange);
-            border-color: var(--shopee-orange);
-        }
-
-        /* --- Section Title --- */
-        .section-title-wrap {
-            background: white;
-            padding: 15px 20px;
-            margin-top: 20px;
-            border-bottom: 1px solid var(--border-color);
-            border-radius: 4px 4px 0 0;
-            display: flex;
-            align-items: center;
-        }
-        .section-title-wrap i { color: var(--shopee-orange); margin-right: 10px; font-size: 1.2rem;}
-        .section-title {
-            font-size: 1.1rem;
+            background: rgba(255, 87, 34, 0.15);
+            color: var(--brand-orange);
+            border-color: var(--brand-orange);
             font-weight: 500;
-            color: var(--shopee-orange);
-            text-transform: uppercase;
         }
 
-        /* --- Product Grid (Shopee Style) --- */
+        /* --- Main Content & Grid --- */
+        .main-container {
+            padding: 10px;
+            min-height: 80vh;
+        }
+        
         #product-list {
             display: grid;
-            /* ปรับจำนวนคอลัมน์ตามขนาดหน้าจอแบบ Shopee */
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 10px;
-            background: white;
-            padding: 15px 10px;
-            border-radius: 0 0 4px 4px;
+            grid-template-columns: repeat(2, 1fr); /* 2 คอลัมน์แบบ Shopee */
+            gap: 10px; /* ช่องว่างระหว่างการ์ดเล็กน้อยให้ดูแน่นๆ */
         }
 
-        /* --- Product Card (หัวใจสำคัญ) --- */
-        .shopee-card {
-            background: white;
-            border: 1px solid transparent; /* ซ่อนเส้นขอบไว้ก่อน */
-            border-radius: 2px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.1s, border-color 0.1s, box-shadow 0.1s;
+        /* --- Immersive Product Card (The Highlight!) --- */
+        .immersive-card {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            /* อัตราส่วนภาพแนวตั้งแบบ TikTok (สูงกว่ากว้าง) */
+            aspect-ratio: 4 / 5; 
+            background: var(--bg-secondary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .shopee-card:hover {
-            transform: translateY(-1px);
-            border-color: var(--shopee-orange); /* ชี้แล้วขอบส้ม */
-            box-shadow: var(--card-hover-shadow);
-            z-index: 2;
-        }
-
-        /* ป้าย Tag มุมขวาบน (เช่น Mall/Preferred) - เราประยุกต์เป็นป้ายรีวิว */
-        .card-badge-top {
-            position: absolute;
-            top: 0; right: 0;
-            background: #fcd511; /* สีเหลืองแบบ Shopee Mall */
-            color: var(--text-primary);
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 2px 6px;
-            border-radius: 0 2px 0 4px;
-            z-index: 3;
-        }
-
-        .card-img-wrap {
-            width: 100%;
-            padding-top: 100%; /* สี่เหลี่ยมจัตุรัส (1:1 Aspect Ratio) */
-            position: relative;
-            background: #f9f9f9;
-        }
         .card-img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* เอารูปมาขยายให้เต็มพื้นที่ */
+            display: block;
         }
 
-        .card-body {
-            padding: 10px;
-            flex-grow: 1;
+        /* Gradient Overlay: สร้างเงาดำด้านล่างเพื่อให้ตัวหนังสืออ่านง่าย */
+        .card-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            /* ไล่สีจากโปร่งใสไปดำ */
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+            padding: 60px 10px 10px 10px; /* Padding บนเยอะหน่อยให้ไล่สีสวย */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-end;
         }
 
-        /* ชื่อสินค้า ตัดคำ 2 บรรทัด */
         .card-title {
             font-size: 0.9rem;
-            color: var(--text-primary);
-            line-height: 1.4em;
-            height: 2.8em; /* ความสูง 2 บรรทัด */
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            margin-bottom: 5px;
-            word-break: break-word;
+            font-weight: 500;
+            line-height: 1.3;
+            /* ตัดคำ 2 บรรทัด */
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* ส่วนราคาและข้อมูลอื่นๆ */
-        .card-footer-info {
-            margin-top: auto;
-        }
-
-        .card-price-wrap {
-            color: var(--shopee-orange);
+        .card-footer {
             display: flex;
             align-items: baseline;
-        }
-        .currency-symbol { font-size: 0.8rem; margin-right: 2px; }
-        .price-number { font-size: 1.2rem; font-weight: 500; }
-
-        .card-meta-row {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-top: 5px;
+        }
+
+        .card-price {
+            color: var(--brand-orange);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .card-price span { font-size: 0.8rem; }
+
+        /* ปุ่มดูรีวิวเล็กๆ */
+        .btn-shop-mini {
+            background: rgba(255, 87, 34, 0.2);
+            color: var(--brand-orange);
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(5px);
         }
-        .meta-rating i { color: #ffce3d; font-size: 0.7rem;}
-        .btn-action-text { color: var(--text-secondary); font-size: 0.75rem;}
-        .shopee-card:hover .btn-action-text { color: var(--shopee-orange); } /* ชี้แล้วเปลี่ยนสี */
 
-        /* Loading State */
-        .loading { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-secondary); background: white;}
-
-        /* --- Mobile Responsiveness --- */
-        @media (max-width: 992px) {
-             #product-list { grid-template-columns: repeat(4, 1fr); }
-             .header-search-wrap { margin: 0 20px; }
-        }
-        @media (max-width: 768px) {
-            .shopee-header { height: 60px; }
-            body { padding-top: 60px; }
-            .header-logo { font-size: 1.4rem; }
-            .header-logo span, .header-search-wrap { display: none; } /* ซ่อนชื่อและช่องค้นหาบนมือถือ */
-            .header-container { justify-content: center; } .header-icons { position: absolute; right: 20px; }
-            
-            #product-list { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 10px 8px;}
-            .banner-placeholder { height: 150px; font-size: 1.5rem; }
-            .card-body { padding: 8px; }
-            .card-title { font-size: 0.85rem; }
-            .price-number { font-size: 1.1rem; }
-        }
+        /* Loading & No Result State */
+        .status-msg { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--text-secondary); }
+        .status-icon { font-size: 2rem; margin-bottom: 15px; color: var(--brand-orange); opacity: 0.5;}
 
     </style>
 </head>
 <body>
 
-    <header class="shopee-header">
-        <div class="container header-container">
-            <a href="#" class="header-logo">
-                <i class="fas fa-shopping-bag"></i>
-                <span>banneemeereview</span>
-            </a>
-            
-            <div class="header-search-wrap">
-                <div class="header-search-box">
-                    <input type="text" class="header-search-input" placeholder="ค้นหารีวิวของใช้ในบ้าน...">
-                    <button class="header-search-btn"><i class="fas fa-search"></i></button>
-                </div>
+    <div class="fixed-top-container">
+        <header class="hybrid-header">
+            <div class="brand-logo">banneemeereview</div>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="ค้นหารีวิว...">
             </div>
+        </header>
 
-            <div class="header-icons">
-                <i class="far fa-bell"></i>
-                <i class="far fa-user"></i>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="banner-section">
-            <div class="banner-placeholder">
-               🎉 รวมของใช้เด็ดประจำเดือนนี้
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-header">หมวดหมู่ยอดนิยม</div>
-            <nav class="category-nav-scroll" id="category-filter">
-                <button class="cat-pill active" onclick="filterProducts('all')">ทั้งหมด</button>
+        <div class="category-nav-wrap">
+            <nav class="category-scroll" id="category-filter">
+                <button class="cat-pill active" onclick="filterByCategory('all')">🔥 ทั้งหมด</button>
                 </nav>
         </div>
-
-        <div class="section-title-wrap">
-            <i class="fas fa-thumbs-up"></i>
-            <h2 class="section-title">รายการแนะนำประจำวัน</h2>
-        </div>
-        
-        <div id="product-list">
-            <div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>กำลังโหลดข้อมูล...</div>
-        </div>
     </div>
+
+    <main class="main-container">
+        <div id="product-list">
+            <div class="status-msg">
+                <i class="fas fa-circle-notch fa-spin status-icon"></i><br>
+                กำลังโหลดรีวิวเด็ดๆ...
+            </div>
+        </div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
@@ -356,18 +232,21 @@
         const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSg4AWiUuB_-G_uRfbnwHQKZpOzBetOVqtA9mRyfj3uGLeObxFZpvj0hmEZdQLm_s5LZl1ck2_zWw5/pub?gid=0&single=true&output=csv';
         // ============================
 
-        let allProducts = [];
+        let allProducts = []; // เก็บสินค้าทั้งหมด
+        let currentCategory = 'all'; // เก็บหมวดหมู่ปัจจุบัน
 
+        // โหลดข้อมูลครั้งแรก
         Papa.parse(googleSheetCSVUrl, {
             download: true, header: true, skipEmptyLines: true,
             complete: function(results) {
                 allProducts = results.data.reverse();
                 generateCategoryPills();
-                renderProducts('all');
+                renderProducts(allProducts); // แสดงทั้งหมดก่อน
+                setupSearchListener(); // เริ่มระบบค้นหา
             }
         });
 
-        // ฟังก์ชันสร้างปุ่มหมวดหมู่แบบแคปซูล (Pills)
+        // --- ฟังก์ชันสร้างปุ่มหมวดหมู่ ---
         function generateCategoryPills() {
             const categories = new Set();
             allProducts.forEach(p => { if(p.Category) categories.add(p.Category.trim()); });
@@ -380,52 +259,79 @@
                 btn.onclick = () => {
                     document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    filterProducts(cat);
+                    filterByCategory(cat);
                 };
                 navContainer.appendChild(btn);
             });
         }
 
-        // ฟังก์ชันแสดงการ์ดสินค้า (UX/UI ใหม่)
-        function renderProducts(filterCategory) {
+        // --- ฟังก์ชันระบบค้นหา (ใหม่!) ---
+        function setupSearchListener() {
+            const searchInput = document.getElementById('searchInput');
+            // ทำงานทันทีที่พิมพ์ (Real-time)
+            searchInput.addEventListener('input', (e) => {
+                const keyword = e.target.value.toLowerCase().trim();
+                
+                // ถ้าช่องค้นหาว่าง ให้กลับไปแสดงตามหมวดหมู่ปัจจุบัน
+                if (keyword === '') {
+                    filterByCategory(currentCategory);
+                    return;
+                }
+
+                // กรองข้อมูล: หาว่าชื่อสินค้ามีคำที่พิมพ์หรือไม่
+                const filteredBySearch = allProducts.filter(product => 
+                    product.Name && product.Name.toLowerCase().includes(keyword)
+                );
+                
+                // รีเซ็ตปุ่มหมวดหมู่ เพื่อบอกว่าตอนนี้กำลังใช้ผลการค้นหาอยู่
+                document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+
+                renderProducts(filteredBySearch);
+            });
+        }
+
+        // --- ฟังก์ชันกรองตามหมวดหมู่ ---
+        function filterByCategory(cat) {
+            currentCategory = cat;
+            // เคลียร์ช่องค้นหาเมื่อกดเปลี่ยนหมวดหมู่
+            document.getElementById('searchInput').value = '';
+
+            if(cat === 'all') {
+                 document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+                 document.querySelector('.cat-pill:first-child').classList.add('active');
+                 renderProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.Category && p.Category.trim() === cat);
+                renderProducts(filtered);
+            }
+        }
+
+        // --- ฟังก์ชันแสดงการ์ดสินค้า (ดีไซน์ใหม่ Immersive) ---
+        // ปรับแก้ให้รับ "ข้อมูลที่กรองมาแล้ว" แทนการรับชื่อหมวดหมู่
+        function renderProducts(productsToRender) {
             const listContainer = document.getElementById('product-list');
             listContainer.innerHTML = '';
 
-            let filteredData = allProducts;
-            if (filterCategory !== 'all') {
-                filteredData = allProducts.filter(p => p.Category && p.Category.trim() === filterCategory);
-            }
-
             let htmlContent = '';
-            filteredData.forEach(product => {
+            productsToRender.forEach(product => {
                 if (product.Name && product.Link) {
                     let priceHtml = '';
                     if (product.Price) {
                         let priceNum = Number(product.Price.replace(/,/g, '')).toLocaleString();
-                        priceHtml = `<div class="card-price-wrap"><span class="currency-symbol">฿</span><span class="price-number">${priceNum}</span></div>`;
+                        priceHtml = `<span>฿</span>${priceNum}`;
                     } else {
-                        priceHtml = `<div class="card-price-wrap" style="font-size:0.9rem">ดูราคาที่ร้านค้า</div>`;
+                        priceHtml = `<span style="font-size:0.9rem; font-weight:400;">ดูราคา</span>`;
                     }
                     
-                    // สร้าง Rating ปลอมๆ ให้ดูสมจริง (ถ้าไม่มีในชีต)
-                    let ratingHtml = product.Rating ? 
-                        `<span class="meta-rating"><i class="fas fa-star"></i> ${product.Rating}</span>` : 
-                        `<span class="meta-rating" style="color:#888">ขายแล้ว 1.2พัน ชิ้น</span>`;
-
+                    // การ์ดแบบ Immersive: รูปเต็ม พื้นหลังทึบ ตัวหนังสือซ้อนทับ
                     htmlContent += `
-                        <a href="${product.Link}" target="_blank" class="shopee-card">
-                            <div class="card-badge-top">รีวิวเด็ด</div>
-                            <div class="card-img-wrap">
-                                <img src="${product.Image}" alt="${product.Name}" class="card-img" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-                            </div>
-                            <div class="card-body">
+                        <a href="${product.Link}" target="_blank" class="immersive-card">
+                            <img src="${product.Image}" alt="${product.Name}" class="card-img" onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'">
+                            <div class="card-overlay">
                                 <h3 class="card-title">${product.Name}</h3>
-                                <div class="card-footer-info">
-                                    ${priceHtml}
-                                    <div class="card-meta-row">
-                                        ${ratingHtml}
-                                        <span class="btn-action-text">ดูรายละเอียด ></span>
-                                    </div>
+                                <div class="card-footer">
+                                    <div class="card-price">${priceHtml}</div>
+                                    <div class="btn-shop-mini">ไปร้านค้า ></div>
                                 </div>
                             </div>
                         </a>
@@ -434,19 +340,17 @@
             });
 
             if (htmlContent === '') {
-                listContainer.innerHTML = '<div class="loading" style="background:transparent">ไม่พบสินค้าในหมวดหมู่นี้</div>';
+                listContainer.innerHTML = `
+                    <div class="status-msg">
+                        <i class="far fa-sad-tear status-icon"></i><br>
+                        ไม่พบสินค้าที่ค้นหา
+                    </div>`;
+                // เปลี่ยน Grid เป็น 1 คอลัมน์ชั่วคราวเพื่อแสดงข้อความตรงกลาง
+                listContainer.style.gridTemplateColumns = '1fr'; 
             } else {
                 listContainer.innerHTML = htmlContent;
-            }
-        }
-
-        function filterProducts(cat) {
-            if(cat === 'all') {
-                 document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-                 document.querySelector('.cat-pill').classList.add('active');
-                 renderProducts('all');
-            } else {
-                renderProducts(cat);
+                 // คืนค่า Grid เป็น 2 คอลัมน์
+                listContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
             }
         }
     </script>
