@@ -3,260 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บ้านนี้มีรีวิว - คัดของดี การันตีเพื่อบ้านคุณ</title>
+    <title>Graphic Review - รวมของใช้สไตล์มินิมอล</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- ตั้งค่าธีมสี --- */
         :root {
-            --primary-color: #A36645; /* สีส้มอิฐ (สีหลัก) */
-            --secondary-color: #7F9A83; /* สีเขียวใบไม้ */
-            --bg-body: #F8F9FA;
+            --primary-color: #2D3436; /* สีเข้มแบบ GraphicBurger */
+            --accent-color: #e84393; /* สีชมพู/ม่วง สำหรับปุ่มซื้อ (ให้เด่น) */
+            --bg-body: #F2F2F2; /* พื้นหลังเทาอ่อน */
             --bg-card: #ffffff;
-            --text-dark: #2D3436;
-            --text-muted: #636E72;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-            --shadow-md: 0 8px 24px rgba(0,0,0,0.15);
+            --text-main: #2D3436;
+            --text-sub: #b2bec3;
         }
 
-        /* --- Reset & Base Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Kanit', sans-serif;
             background-color: var(--bg-body);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex; flex-direction: column; min-height: 100vh;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            flex: 1;
+            color: var(--text-main);
+            line-height: 1.5;
         }
 
-        /* --- Header --- */
-        header { text-align: center; margin-bottom: 50px; padding-bottom: 30px; border-bottom: 2px solid #eee; }
-        .logo-wrapper { margin-bottom: 20px; }
-        .logo-img { width: 140px; height: auto; border-radius: 20px; box-shadow: var(--shadow-sm); padding: 5px; background: white; }
-        h1 { font-weight: 700; color: var(--primary-color); font-size: 2.2rem; margin-bottom: 10px; }
-        .tagline { font-weight: 400; color: var(--text-muted); font-size: 1.1rem; }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .logo img { height: 40px; margin-right: 10px; border-radius: 5px;}
+
+        /* --- Category Filter Menu (แถบเมนูตรงกลาง) --- */
+        .category-nav {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            white-space: nowrap; /* ป้องกันเมนูตกบรรทัด */
+        }
+        
+        .cat-btn {
+            background: none;
+            border: none;
+            font-family: 'Kanit', sans-serif;
+            font-size: 0.95rem;
+            color: #636e72;
+            cursor: pointer;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .cat-btn:hover, .cat-btn.active {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        /* เส้นขีดเส้นใต้เวลาเลือกเมนู */
+        .cat-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        /* --- Hero / Banner Area (แถบโปรโมทด้านบน) --- */
+        .hero-banner {
+            background: #2d3436;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px auto;
+            border-radius: 8px;
+            max-width: 1100px;
+            background-image: linear-gradient(to right, #2d3436, #636e72);
+        }
+        .hero-banner h2 { font-weight: 400; font-size: 1.5rem; margin-bottom: 10px; }
+        .hero-banner span { color: #ffeaa7; font-weight: 600; }
 
         /* --- Product Grid --- */
         #product-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            padding-bottom: 60px;
         }
 
-        /* --- Product Card Styling --- */
-        .product-card {
+        /* --- Card Design (สไตล์ GraphicBurger) --- */
+        .card {
             background: var(--bg-card);
-            border-radius: 16px;
+            border-radius: 4px; /* มุมมนน้อยๆ สไตล์โมเดิร์น */
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
             text-decoration: none;
-            color: var(--text-dark);
-            display: flex; flex-direction: column; height: 100%;
-            border: 1px solid rgba(0,0,0,0.05);
-            position: relative; /* จำเป็นสำหรับ Price Badge */
-        }
-        .product-card:hover {
-            transform: translateY(-7px);
-            box-shadow: var(--shadow-md);
-            border-color: rgba(163, 102, 69, 0.3);
+            color: var(--text-main);
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
-        .img-wrapper {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-img-wrap {
+            height: 220px;
+            width: 100%;
             overflow: hidden;
-            height: 200px;
-            position: relative; /* จำเป็นสำหรับ Price Badge */
+            position: relative;
+            background-color: #f9f9f9;
         }
-        .product-img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .product-card:hover .product-img { transform: scale(1.08); }
 
-        /* === ส่วนที่เพิ่มใหม่: ป้ายราคาลอยเด่น === */
-        .price-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--primary-color); /* ใช้สีหลักให้เด่น */
-            color: white;
-            font-weight: 700;
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .card:hover .card-img { transform: scale(1.05); }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
             font-size: 1.1rem;
-            padding: 6px 14px;
-            border-radius: 30px; /* ทรงแคปซูลมนๆ */
-            box-shadow: 0 4px 10px rgba(163, 102, 69, 0.4); /* เงาสีส้มให้ดูลอย */
-            z-index: 2; /* ให้อยู่บนสุด */
+            font-weight: 600;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
-        .price-badge .currency {
-            font-size: 0.8rem;
-            margin-left: 4px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-        /* ===================================== */
 
-        .product-info {
-            padding: 24px;
+        .card-desc {
+            font-size: 0.9rem;
+            color: #636e72;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* ตัดคำถ้าเกิน 2 บรรทัด */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
             flex-grow: 1;
-            display: flex; flex-direction: column; justify-content: space-between;
         }
-        .category-badge {
-            display: inline-block; font-size: 0.8rem; font-weight: 500;
-            color: var(--secondary-color); background-color: #f0f7f4;
-            padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; align-self: flex-start;
-        }
-        .product-title {
-            font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;
-            color: var(--text-dark);
-        }
-        .btn-view {
-            display: inline-flex; align-items: center; justify-content: center;
-            color: var(--primary-color); font-weight: 600; font-size: 0.95rem;
-            padding: 10px 20px; border: 2px solid var(--primary-color);
-            border-radius: 50px; transition: all 0.2s; align-self: flex-start; width: 100%;
-        }
-        .btn-view i { margin-left: 8px; transition: margin-left 0.2s; }
-        .product-card:hover .btn-view { background-color: var(--primary-color); color: white; }
-        .product-card:hover .btn-view i { margin-left: 14px; }
 
-        /* --- Loading State --- */
-        .loading-state { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.2rem; }
-        .loading-icon { color: var(--primary-color); font-size: 2rem; margin-bottom: 15px; }
+        /* --- Price & Buy Button --- */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f2f6;
+            padding-top: 15px;
+            margin-top: auto;
+        }
 
-        /* --- Footer --- */
-        footer { background-color: white; padding: 30px 0; text-align: center; border-top: 1px solid #eee; color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
+        .price-tag {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; } .container { padding: 30px 15px; } #product-list { gap: 20px; } .product-info { padding: 18px; }
-            .price-badge { top: 10px; right: 10px; font-size: 1rem; padding: 4px 10px; } /* ปรับขนาดป้ายราคาบนมือถือ */
+        .btn-buy {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+        .btn-buy:hover {
+            background-color: #c44569;
+        }
+
+        /* Loading */
+        .loading { text-align: center; width: 100%; padding: 40px; color: #b2bec3; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .category-nav { width: 100%; padding-bottom: 5px; }
+            .hero-banner { margin: 20px; padding: 30px 15px; }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="logo-wrapper">
-                <img src="logo.png" alt="โลโก้ บ้านนี้มีรีวิว" class="logo-img" onerror="this.style.display='none'">
-            </div>
-            <h1>บ้านนี้มีรีวิว</h1>
-            <p class="tagline">คัดของดี การันตีเพื่อบ้านคุณ | อัปเดตประจำสัปดาห์</p>
-        </header>
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                Graphic Review
+            </a>
+            
+            <nav class="category-nav" id="category-filter">
+                <button class="cat-btn active" onclick="filterProducts('all')">All Items</button>
+                </nav>
+        </div>
+    </header>
 
-        <main>
-            <div id="product-list">
-                <div class="loading-state">
-                    <i class="fas fa-circle-notch fa-spin loading-icon"></i><br>
-                    กำลังโหลดรายการสินค้า...
-                </div>
-            </div>
-        </main>
+    <div class="hero-banner">
+        <h2>คัดสรรของใช้คุณภาพ เพื่อบ้านของคุณ</h2>
+        <p>อัปเดตใหม่ทุกวัน <span>• ใช้งานจริง • รีวิวจริง</span></p>
     </div>
 
-    <footer>
-        <p>© 2024 บ้านนี้มีรีวิว. All rights reserved.</p>
-        <p>ติดตามเราได้ที่ <a href="ใส่ลิงก์เพจเฟสบุ๊คของคุณตรงนี้" target="_blank">Facebook Page</a></p>
-    </footer>
+    <div class="container">
+        <div id="product-list">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> กำลังโหลดสินค้า...</div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
     <script>
-        // --- ลิงก์ Google Sheets CSV เดิมของคุณ ---
-        const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSg4AWiUuB_-G_uRfbnwHQKZpOzBetOVqtA9mRyfj3uGLeObxFZpvj0hmEZdQLm_s5LZl1ck2_zWw5/pub?gid=0&single=true&output=csv'; 
-        // ------------------------------------
+        // === ใส่ลิงก์ CSV ของคุณตรงนี้ ===
+        const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSg4AWiUuB_-G_uRfbnwHQKZpOzBetOVqtA9mRyfj3uGLeObxFZpvj0hmEZdQLm_s5LZl1ck2_zWw5/pub?gid=0&single=true&output=csv';
+        // ============================
 
-        const productListContainer = document.getElementById('product-list');
+        let allProducts = []; // ตัวแปรเก็บสินค้าทั้งหมด
 
-        // ฟังก์ชันจัดรูปแบบราคา (เพิ่มลูกน้ำ และเช็คว่ามีราคาไหม)
-        function formatPrice(price) {
-            // ลบลูกน้ำและช่องว่างออกก่อน (เผื่อมีคนกรอกมา)
-            let cleanPrice = price ? price.toString().replace(/,/g, '').trim() : '';
-            // แปลงเป็นตัวเลข
-            let numericPrice = parseFloat(cleanPrice);
-
-            // ถ้าไม่ใช่ตัวเลข หรือไม่มีค่า ให้คืนค่าว่าง
-            if (isNaN(numericPrice) || cleanPrice === '') {
-                return null;
+        // ฟังก์ชันโหลดข้อมูล
+        Papa.parse(googleSheetCSVUrl, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                allProducts = results.data.reverse(); // เก็บข้อมูลและกลับด้านเอาอันใหม่สุดขึ้นก่อน
+                generateCategoryButtons(); // สร้างปุ่มเมนู
+                renderProducts('all'); // แสดงสินค้าทั้งหมดก่อน
             }
+        });
 
-            // คืนค่าเป็นรูปแบบมีลูกน้ำ (เช่น 1,590)
-            return numericPrice.toLocaleString('th-TH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-        }
+        // 1. ฟังก์ชันสร้างปุ่มหมวดหมู่จากข้อมูลที่มี
+        function generateCategoryButtons() {
+            const categories = new Set();
+            allProducts.forEach(p => {
+                if(p.Category) categories.add(p.Category.trim());
+            });
 
-
-        function fetchAndDisplayProducts() {
-            Papa.parse(googleSheetCSVUrl, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    const products = results.data;
-                    let htmlContent = '';
-
-                    products.reverse().forEach(product => {
-                        if(product.Name && product.Link) {
-                            
-                            // เตรียมป้ายราคา
-                            const formattedPrice = formatPrice(product.Price);
-                            let priceBadgeHtml = '';
-                            // ถ้ามีราคาที่ถูกต้อง ให้สร้าง HTML ป้ายราคา
-                            if (formattedPrice) {
-                                priceBadgeHtml = `<div class="price-badge">${formattedPrice} <span class="currency">฿</span></div>`;
-                            }
-
-                            htmlContent += `
-                                <a href="${product.Link}" target="_blank" class="product-card">
-                                    <div class="img-wrapper">
-                                        <img src="${product.Image || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${product.Name}" class="product-img">
-                                        ${priceBadgeHtml}
-                                    </div>
-                                    <div class="product-info">
-                                        <div>
-                                            <span class="category-badge">
-                                                <i class="fas fa-tag"></i> ${product.Category || 'ทั่วไป'}
-                                            </span>
-                                            <h3 class="product-title">${product.Name}</h3>
-                                        </div>
-                                        <div class="btn-view">
-                                            อ่านรีวิวฉบับเต็ม <i class="fas fa-arrow-right"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            `;
-                        }
-                    });
-
-                    if (htmlContent === '') {
-                         productListContainer.innerHTML = '<div class="loading-state"><i class="fas fa-box-open loading-icon"></i><br>ยังไม่มีรายการสินค้า</div>';
-                    } else {
-                         productListContainer.innerHTML = htmlContent;
-                    }
-                   
-                },
-                error: function(err) {
-                    productListContainer.innerHTML = '<div class="loading-state" style="color: #E74C3C;"><i class="fas fa-exclamation-triangle loading-icon"></i><br>เกิดข้อผิดพลาดในการโหลดข้อมูล</div>';
-                    console.error('Error parsing CSV:', err);
-                }
+            const navContainer = document.getElementById('category-filter');
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'cat-btn';
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    // เปลี่ยนปุ่ม Active
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterProducts(cat); // กรองสินค้า
+                };
+                navContainer.appendChild(btn);
             });
         }
 
-        fetchAndDisplayProducts();
+        // 2. ฟังก์ชันแสดงสินค้า (รับค่าหมวดหมู่มาเพื่อกรอง)
+        function renderProducts(filterCategory) {
+            const listContainer = document.getElementById('product-list');
+            listContainer.innerHTML = ''; // ล้างของเก่า
+
+            let filteredData = allProducts;
+            if (filterCategory !== 'all') {
+                filteredData = allProducts.filter(p => p.Category && p.Category.trim() === filterCategory);
+            }
+
+            let htmlContent = '';
+            filteredData.forEach(product => {
+                if (product.Name && product.Link) {
+                    // แปลงราคา
+                    let price = product.Price ? Number(product.Price.replace(/,/g, '')).toLocaleString() + ' ฿' : '';
+                    // คำอธิบาย (ถ้าไม่มีให้ว่างไว้)
+                    let desc = product.Description || 'รายละเอียดสินค้าเพิ่มเติม คลิกเพื่อดูรีวิวฉบับเต็ม...';
+
+                    htmlContent += `
+                        <a href="${product.Link}" target="_blank" class="card">
+                            <div class="card-img-wrap">
+                                <img src="${product.Image}" alt="${product.Name}" class="card-img">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">${product.Name}</h3>
+                                <div class="card-meta">
+                                    <span><i class="far fa-folder"></i> ${product.Category || 'General'}</span>
+                                </div>
+                                <p class="card-desc">${desc}</p>
+                                
+                                <div class="card-footer">
+                                    <div class="price-tag">${price}</div>
+                                    <span class="btn-buy">Shop Now</span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                }
+            });
+
+            if (htmlContent === '') {
+                listContainer.innerHTML = '<div class="loading">ไม่พบสินค้าในหมวดหมู่นี้</div>';
+            } else {
+                listContainer.innerHTML = htmlContent;
+            }
+        }
+
+        // ทำให้ปุ่ม All Items ทำงาน
+        function filterProducts(cat) {
+            if(cat === 'all') {
+                 // รีเซ็ตปุ่ม Active เป็น All Items
+                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                 document.querySelector('.cat-btn').classList.add('active'); // ปุ่มแรกคือ All
+                 renderProducts('all');
+            } else {
+                renderProducts(cat);
+            }
+        }
 
     </script>
-
 </body>
 </html>
