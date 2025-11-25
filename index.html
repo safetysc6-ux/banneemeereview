@@ -16,7 +16,7 @@
             --bg-main: #121212; --bg-secondary: #1e1e1e;
             --text-primary: #ffffff; --text-secondary: #b0b0b0;
             --brand-orange: #ff5722; --facebook-blue: #1877F2;
-            --online-green: #2ecc71; /* สีเขียวสำหรับสถานะออนไลน์ */
+            --online-green: #2ecc71;
             --header-height: 60px; --cat-nav-height: 50px;
         }
 
@@ -31,14 +31,12 @@
         .main-container { padding: 10px; min-height: 80vh; }
         #product-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
-        /* --- Header Styles (ปรับปรุงใหม่ เพิ่มตัวนับคน) --- */
+        /* --- Header Styles --- */
         .hybrid-header {
-            height: var(--header-height); display: flex; align-items: center; justify-content: space-between; /* จัดชิดขอบซ้ายขวา */
+            height: var(--header-height); display: flex; align-items: center; justify-content: space-between;
             padding: 0 15px; border-bottom: 1px solid #2a2a2a;
         }
         .brand-logo { font-size: 1.2rem; font-weight: 700; color: var(--brand-orange); white-space: nowrap; }
-        
-        /* === ส่วนที่เพิ่มใหม่: ป้ายแสดงจำนวนคนออนไลน์ === */
         .online-counter-badge {
             display: flex; align-items: center;
             background: rgba(255,255,255,0.07); padding: 4px 10px; border-radius: 20px;
@@ -48,7 +46,6 @@
             width: 8px; height: 8px; background-color: var(--online-green);
             border-radius: 50%; margin-right: 6px; position: relative;
         }
-        /* เพิ่มเอฟเฟกต์แสงวิบวับให้จุดสีเขียว */
         .online-indicator::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border-radius: 50%; background-color: var(--online-green);
@@ -59,40 +56,43 @@
             70% { transform: scale(2.5); opacity: 0; }
             100% { transform: scale(1); opacity: 0; }
         }
-        /* ========================================== */
 
-        /* --- Search & Category Nav --- */
-        /* ซ่อนช่องค้นหาใน Header เดิมออกไปก่อน เพื่อความสะอาดตา (หรือจะคงไว้ก็ได้) */
-        /* .search-container { flex: 1; position: relative; margin-left: 15px;} */
-        /* .search-input { width: 100%; background: var(--bg-secondary); border: none; border-radius: 30px; padding: 10px 15px 10px 40px; color: var(--text-primary); font-size: 0.95rem; outline: none; } */
-        /* .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); } */
-
+        /* --- Search & Nav --- */
         .category-nav-wrap { height: var(--cat-nav-height); display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid #2a2a2a; background: var(--bg-main); }
         .category-scroll { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
         .category-scroll::-webkit-scrollbar { display: none; }
         .cat-pill { background: rgba(255,255,255,0.1); color: var(--text-secondary); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
         .cat-pill.active { background: rgba(255, 87, 34, 0.15); color: var(--brand-orange); border-color: var(--brand-orange); font-weight: 500; }
-        
-        /* --- Search Bar (ย้ายมาไว้ใต้ Header เพื่อความสวยงาม) --- */
-        .mobile-search-bar {
-            padding: 10px 15px; background: var(--bg-main); border-bottom: 1px solid #2a2a2a;
-        }
+        .mobile-search-bar { padding: 10px 15px; background: var(--bg-main); border-bottom: 1px solid #2a2a2a; }
         .mobile-search-input-wrap { position: relative; }
         .mobile-search-input { width: 100%; background: var(--bg-secondary); border: none; border-radius: 8px; padding: 12px 15px 12px 40px; color: var(--text-primary); font-size: 1rem; outline: none; }
         .mobile-search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
 
-        /* --- Card, Modal, Floating Btn Styles (เหมือนเดิม) --- */
-        .immersive-card { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-secondary); box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: block; }
+        /* --- Card & Modal Styles --- */
+        /* ทำให้การ์ดทั้งใบเป็นลิ้งก์ */
+        .immersive-card-link {
+            display: block; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-secondary); box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
         .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%); padding: 60px 10px 10px 10px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+            padding: 60px 10px 10px 10px; display: flex; flex-direction: column; justify-content: flex-end;
+            pointer-events: none; /* ให้คลิกทะลุไปโดนลิ้งก์ */
+        }
         .card-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-        .card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; pointer-events: auto; /* ให้ปุ่มใน footer คลิกได้ */ }
         .card-price { color: var(--brand-orange); font-weight: 700; font-size: 1.2rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         .card-price span { font-size: 0.8rem; }
-        .card-actions { display: flex; gap: 8px; }
-        .btn-action { background: rgba(255,255,255,0.2); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; backdrop-filter: blur(5px); border: none; cursor: pointer; transition: background 0.2s; }
-        .btn-action.shop { background: var(--brand-orange); }
-        .btn-action:hover { transform: scale(1.05); }
+        
+        /* ปรับปุ่ม Action ให้เหลือแค่ปุ่มดูรายละเอียด */
+        .btn-action-view {
+            background: rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; backdrop-filter: blur(5px); border: none; cursor: pointer; transition: background 0.2s;
+            z-index: 2; /* ให้อยู่บนสุด */
+        }
+        .btn-action-view:hover { transform: scale(1.05); background: rgba(255,255,255,0.3); }
+
+        /* Modal & Others */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
         .modal-overlay.active { display: flex; }
         .modal-container { background: var(--bg-secondary); width: 100%; max-width: 500px; border-radius: 12px; overflow: hidden; position: relative; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -117,12 +117,11 @@
     <div class="fixed-top-container">
         <header class="hybrid-header">
             <div class="brand-logo">banneemeereview</div>
-            
             <div class="online-counter-badge">
                 <span class="online-indicator"></span>
                 <span id="onlineCountText">Loading...</span>
             </div>
-            </header>
+        </header>
         
         <div class="mobile-search-bar">
             <div class="mobile-search-input-wrap">
@@ -174,33 +173,24 @@
         let allProducts = []; let currentCategory = 'all';
         const modal = document.getElementById('productModal');
 
-        // === ส่วนที่เพิ่มใหม่: ฟังก์ชันจำลองตัวเลขคนออนไลน์ ===
         function simulateOnlineUsers() {
             const countElement = document.getElementById('onlineCountText');
-            // สุ่มตัวเลขเริ่มต้นระหว่าง 15 ถึง 35 คน
             let currentCount = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
-            
             countElement.innerText = `${currentCount} ออนไลน์`;
-
-            // อัปเดตตัวเลขทุกๆ 3-7 วินาที
             setInterval(() => {
-                // สุ่มว่าจะเพิ่มหรือลด (-2 ถึง +3 คน)
                 const change = Math.floor(Math.random() * 6) - 2;
                 currentCount += change;
-                // จำกัดไม่ให้ต่ำกว่า 10 หรือเกิน 50 เพื่อความสมจริง
                 if (currentCount < 10) currentCount = 10 + Math.floor(Math.random() * 5);
                 if (currentCount > 50) currentCount = 50 - Math.floor(Math.random() * 5);
-                
                 countElement.innerText = `${currentCount} ออนไลน์`;
             }, Math.random() * (7000 - 3000) + 3000);
         }
-        // เริ่มทำงานทันที
         simulateOnlineUsers();
-        // ==================================================
-
 
         Papa.parse(googleSheetCSVUrl, {
             download: true, header: true, skipEmptyLines: true,
+            // เพิ่มบรรทัดนี้ เพื่อให้มั่นใจว่ามันแปลงข้อมูลเป็น String ทั้งหมด (แก้ปัญหา ID)
+            transform: (value) => value.toString(), 
             complete: function(results) {
                 allProducts = results.data.reverse();
                 generateCategoryPills(); renderProducts(allProducts); setupSearchListener();
@@ -240,6 +230,7 @@
             } else { renderProducts(allProducts.filter(p => p.Category && p.Category.trim() === cat)); }
         }
 
+        // --- แก้ไขฟังก์ชัน renderProducts ---
         function renderProducts(productsToRender) {
             const listContainer = document.getElementById('product-list');
             listContainer.innerHTML = ''; let htmlContent = '';
@@ -247,19 +238,20 @@
                 if (product.Name && product.Link) {
                     let priceHtml = product.Price ? `<span>฿</span>${Number(product.Price.replace(/,/g, '')).toLocaleString()}` : `<span style="font-size:0.9rem; font-weight:400;">ดูราคา</span>`;
                     let imgUrl = product.Image || 'https://via.placeholder.com/300x400?text=No+Image';
+                    
+                    // ใช้ <a> ครอบทั้งการ์ด และปรับปุ่ม Action
                     htmlContent += `
-                        <div class="immersive-card">
-                            <img src="${imgUrl}" alt="${product.Name}" class="card-img">
-                            <div class="card-overlay">
-                                <h3 class="card-title">${product.Name}</h3>
-                                <div class="card-footer">
-                                    <div class="card-price">${priceHtml}</div>
-                                    <div class="card-actions">
-                                        <button class="btn-action" onclick="openModal(${index})"><i class="far fa-eye"></i></button>
-                                        <a href="${product.Link}" target="_blank" class="btn-action shop"><i class="fas fa-shopping-bag"></i></a>
+                        <div style="position: relative;">
+                            <a href="${product.Link}" target="_blank" class="immersive-card-link">
+                                <img src="${imgUrl}" alt="${product.Name}" class="card-img">
+                                <div class="card-overlay">
+                                    <h3 class="card-title">${product.Name}</h3>
+                                    <div class="card-footer">
+                                        <div class="card-price">${priceHtml}</div>
+                                        <button class="btn-action-view" onclick="event.preventDefault(); openModal(${index});"><i class="far fa-eye"></i></button>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     `;
                 }
